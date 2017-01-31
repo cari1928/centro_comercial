@@ -1,5 +1,11 @@
 package modelo;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -7,8 +13,8 @@ import javax.xml.bind.annotation.XmlElement; //no causa error
 //import com.sun.xml.internal.txw2.annotation.XmlElement; //causa error
 
 //las dos instrucciones especifican la raiz de json
-@XmlAccessorType(XmlAccessType.NONE) 
-@XmlRootElement(name="empleado") 
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name = "empleado")
 public class empleado {
 	// Atributos clase = atributos tabla en BD
 	private int id;
@@ -20,7 +26,7 @@ public class empleado {
 	private String correo;
 	private String tel_casa;
 	private String tel_cel;
-	private char genero;
+	private String genero;
 
 	// para que salga en respuesta de una solicitud get o post
 	@XmlElement(required = true)
@@ -29,7 +35,7 @@ public class empleado {
 	}
 
 	// para que salga en respuesta de una solicitud get o post
-	@XmlElement(required=true)
+	@XmlElement(required = true)
 	public String getNombre() {
 		return nombre;
 	}
@@ -78,7 +84,7 @@ public class empleado {
 
 	// para que salga en respuesta de una solicitud get o post
 	@XmlElement(required = true)
-	public char getGenero() {
+	public String getGenero() {
 		return genero;
 	}
 
@@ -118,8 +124,72 @@ public class empleado {
 		this.tel_cel = tel_cel;
 	}
 
-	public void setGenero(char genero) {
+	public void setGenero(String genero) {
 		this.genero = genero;
+	}
+
+	public List<empleado> getListaE() {
+		// jersey va a tomar cada objeto y retornará un json
+		List<empleado> arrE = null;
+		empleado objE;
+		try {
+			arrE = new ArrayList<>();
+			String sql = "SELECT * FROM empleado ORDER BY nombre";
+			conexion objC = new conexion();
+			Connection con = objC.getCon();
+			Statement stmt = con.createStatement();
+			ResultSet res = stmt.executeQuery(sql);
+
+			while (res.next()) {
+				objE = new empleado();
+				objE.id = res.getInt(1);
+				objE.nombre = res.getString(2);
+				objE.apellido_p = res.getString(3);
+				objE.apellido_m = res.getString(4);
+				objE.rfc = res.getString(5);
+				objE.direccion = res.getString(6);
+				objE.correo = res.getString(7);
+				objE.tel_casa = res.getString(8);
+				objE.tel_cel = res.getString(9);
+				objE.genero = res.getString(10);
+				arrE.add(objE);
+			}
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return arrE;
+	}
+
+	public empleado getEmpleado() {
+		try {
+			String query = "SELECT * FROM empleado WHERE id=" + id;
+			// en este caso es mejor mantener este proceso como variable y no
+			// global
+			conexion objC = new conexion();
+			Connection con = objC.getCon();
+			Statement stmt = con.createStatement();
+			ResultSet res = stmt.executeQuery(query);
+
+			if (res.next()) {
+				this.nombre = res.getString(2);
+				this.apellido_p = res.getString(3);
+				this.apellido_m = res.getString(4);
+				this.rfc =  res.getString(5);
+				this.direccion = res.getString(6);
+				this.correo = res.getString(7);
+				this.tel_casa = res.getString(8);
+				this.tel_cel = res.getString(9);
+				this.genero = res.getString(10);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// regresa este mismo contexto de empleado
+		return this;
 	}
 
 }
