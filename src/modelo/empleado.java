@@ -177,7 +177,7 @@ public class empleado {
 				this.nombre = res.getString(2);
 				this.apellido_p = res.getString(3);
 				this.apellido_m = res.getString(4);
-				this.rfc =  res.getString(5);
+				this.rfc = res.getString(5);
 				this.direccion = res.getString(6);
 				this.correo = res.getString(7);
 				this.tel_casa = res.getString(8);
@@ -185,11 +185,34 @@ public class empleado {
 				this.genero = res.getString(10);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
-
 		// regresa este mismo contexto de empleado
 		return this;
+	}
+
+	public void insEmpleado() {
+		try {
+			String query = "INSERT INTO empelado values(nombre, apellido_p, apellido_m, rfc, "
+					+ "direccion, correo, tel_casa, tel_cel, genero)" + "values('" + nombre + "', '" + apellido_p
+					+ "', '" + apellido_m + "', '" + rfc + "', '" + direccion + "', '" + correo + "', '" + tel_casa
+					+ "', '" + tel_cel + "', '" + genero + "')";
+			conexion objC = new conexion();
+			Connection con = objC.getCon();
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(query);
+			
+		} catch (Exception e) {
+
+		}
+	}
+
+	public void actEmpleado() {
+
+	}
+
+	public void delEmpleado() {
+
 	}
 
 }
