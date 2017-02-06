@@ -27,8 +27,8 @@
 		<servlet-name>jersey-servlet</servlet-name>
 		<url-pattern>/apirest/*</url-pattern>
 	</servlet-mapping>
-
-	<security-role>
+	
+		<security-role>
 		<role-name>admin</role-name>
 	</security-role>
 

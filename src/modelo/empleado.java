@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement; //no causa error
-//import com.sun.xml.internal.txw2.annotation.XmlElement; //causa error
 
 //las dos instrucciones especifican la raiz de json
 @XmlAccessorType(XmlAccessType.NONE)
@@ -193,8 +192,8 @@ public class empleado {
 
 	public void insEmpleado() {
 		try {
-			String query = "INSERT INTO empelado values(nombre, apellido_p, apellido_m, rfc, "
-					+ "direccion, correo, tel_casa, tel_cel, genero)" + "values('" + nombre + "', '" + apellido_p
+			String query = "INSERT INTO empleado(nombre, apellido_p, apellido_m, rfc, "
+					+ "direccion, correo, tel_casa, tel_cel, genero)" + " values('" + nombre + "', '" + apellido_p
 					+ "', '" + apellido_m + "', '" + rfc + "', '" + direccion + "', '" + correo + "', '" + tel_casa
 					+ "', '" + tel_cel + "', '" + genero + "')";
 			conexion objC = new conexion();
@@ -203,7 +202,7 @@ public class empleado {
 			stmt.executeUpdate(query);
 			
 		} catch (Exception e) {
-
+			System.out.println(e.toString()); //para mostrar errores en consola
 		}
 	}
 
