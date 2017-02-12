@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import modelo.empleado;
+import modelo.usuario;
 
 //ubica a la clase
 @Path("/empleado")
@@ -20,12 +21,12 @@ public class WSEmpleado {
 	// define el método, el contexto
 	@GET
 	@Path("/listado")
-
 	// listado = producir
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<empleado> getListado() {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<empleado> getListado(usuario objU) {
 		empleado objeE = new empleado();
-		return objeE.getListaE();
+		return objeE.getListaE(objU);
 		// después lo convertirá a JSON
 	}
 

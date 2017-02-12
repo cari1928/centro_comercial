@@ -27,6 +27,13 @@ public class empleado {
 	private String tel_cel;
 	private String genero;
 
+	private String status;
+
+	// atributo factible a salir de un resultado web service
+	public String getStatus() {
+		return status;
+	}
+
 	// para que salga en respuesta de una solicitud get o post
 	@XmlElement(required = true)
 	public int getId() {
@@ -127,31 +134,48 @@ public class empleado {
 		this.genero = genero;
 	}
 
-	public List<empleado> getListaE() {
+	public List<empleado> getListaE(usuario objU) {
 		// jersey va a tomar cada objeto y retornará un json
 		List<empleado> arrE = null;
 		empleado objE;
 		try {
 			arrE = new ArrayList<>();
-			String sql = "SELECT * FROM empleado ORDER BY nombre";
+
 			conexion objC = new conexion();
 			Connection con = objC.getCon();
-			Statement stmt = con.createStatement();
-			ResultSet res = stmt.executeQuery(sql);
 
-			while (res.next()) {
-				objE = new empleado();
-				objE.id = res.getInt(1);
-				objE.nombre = res.getString(2);
-				objE.apellido_p = res.getString(3);
-				objE.apellido_m = res.getString(4);
-				objE.rfc = res.getString(5);
-				objE.direccion = res.getString(6);
-				objE.correo = res.getString(7);
-				objE.tel_casa = res.getString(8);
-				objE.tel_cel = res.getString(9);
-				objE.genero = res.getString(10);
-				arrE.add(objE);
+			String usuario = objU.getUsuario();
+			String password = objU.getPassword();
+			String token = objU.getToken();
+			String query = "SELECT COUNT(*) FROM bitacora WHERE usuario='" + usuario + "' AND password='" + password
+					+ "' AND token='" + token + "' AND NOW() BETWEEN fecini and fecfin";
+			Statement stmt_2 = con.createStatement();
+			ResultSet res_2 = stmt_2.executeQuery(query);
+
+			if (res_2.next()) {
+				// si va a tener valores
+				query = "SELECT * FROM empleado ORDER BY nombre";
+				Statement stmt = con.createStatement();
+				ResultSet res = stmt.executeQuery(query);
+
+				while (res.next()) {
+					objE = new empleado();
+					objE.id = res.getInt(1);
+					objE.nombre = res.getString(2);
+					objE.apellido_p = res.getString(3);
+					objE.apellido_m = res.getString(4);
+					objE.rfc = res.getString(5);
+					objE.direccion = res.getString(6);
+					objE.correo = res.getString(7);
+					objE.tel_casa = res.getString(8);
+					objE.tel_cel = res.getString(9);
+					objE.genero = res.getString(10);
+					arrE.add(objE);
+				}
+			} else {
+				this.status = "Ocurrió un error en la conexión al servidor";
+				// manda el obj en el que estamos como producto del arreglo
+				arrE.add(this);
 			}
 			con.close();
 
@@ -200,18 +224,39 @@ public class empleado {
 			Connection con = objC.getCon();
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
-			
+
 		} catch (Exception e) {
-			System.out.println(e.toString()); //para mostrar errores en consola
+			System.out.println(e.toString()); // para mostrar errores en consola
 		}
 	}
 
-	public void actEmpleado() {
+	// falta checar que funcionen actualizar y eliminar
 
+	public void actEmpleado() {
+		try {
+			String query = "UPDATE empleado SET nombre='" + nombre + "', apellido_p='" + apellido_p + "', "
+					+ "apellido_m='" + apellido_m + "', rfc='" + rfc + "', direccion='" + direccion + "', correo='"
+					+ correo + "', tel_casa='" + tel_casa + "', tel_cel='" + tel_cel + "', genero='" + genero
+					+ "' WHERE id=" + id;
+			conexion objC = new conexion();
+			Connection con = objC.getCon();
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(query);
+		} catch (Exception e) {
+			System.out.println(e.toString()); // para mostrar errores en consola
+		}
 	}
 
 	public void delEmpleado() {
-
+		try {
+			String query = "DELETE FROM empelado where id=" + id;
+			conexion objC = new conexion();
+			Connection con = objC.getCon();
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(query);
+		} catch (Exception e) {
+			System.out.println(e.toString()); // para mostrar errores en consola
+		}
 	}
 
 }
