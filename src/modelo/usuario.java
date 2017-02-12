@@ -35,8 +35,10 @@ public class usuario {
 	}
 
 	public void validaUsuario() {
+		String query = "query null";
+
 		try {
-			String query = "SELECT * FROM usuario " + "WHERE usuario='" + usuario + "' and password='" + password + "'";
+			query = "SELECT * FROM usuario " + "WHERE nombre='" + usuario + "' and password='" + password + "'";
 			conexion objC = new conexion();
 			Connection conn = objC.getCon();
 			Statement stmt = conn.createStatement();
@@ -53,9 +55,9 @@ public class usuario {
 			}
 
 		} catch (Exception e) {
-
+			System.out.println(query);
+			e.printStackTrace();
 		}
-		// return this;
 	}
 
 	// generar token con md5

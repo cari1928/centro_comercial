@@ -19,6 +19,7 @@ public class bitacora {
 			Statement stmt = conn.createStatement();
 			stmt.executeUpdate(query);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
