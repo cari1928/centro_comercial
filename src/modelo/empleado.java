@@ -138,6 +138,8 @@ public class empleado {
 		// jersey va a tomar cada objeto y retornará un json
 		List<empleado> arrE = null;
 		empleado objE;
+		String query =  "";
+		
 		try {
 			arrE = new ArrayList<>();
 
@@ -147,8 +149,9 @@ public class empleado {
 			String usuario = objU.getUsuario();
 			String password = objU.getPassword();
 			String token = objU.getToken();
-			String query = "SELECT COUNT(*) FROM bitacora WHERE usuario='" + usuario + "' AND password='" + password
+			query = "SELECT COUNT(*) FROM bitacora WHERE usuario='" + usuario + "' AND password='" + password
 					+ "' AND token='" + token + "' AND NOW() BETWEEN fecini and fecfin";
+			
 			Statement stmt_2 = con.createStatement();
 			ResultSet res_2 = stmt_2.executeQuery(query);
 
@@ -180,15 +183,18 @@ public class empleado {
 			con.close();
 
 		} catch (Exception e) {
+			System.out.println(query);
 			e.printStackTrace();
 		}
-
 		return arrE;
 	}
 
 	public empleado getEmpleado() {
+		String query = "no hay query";
+		
 		try {
-			String query = "SELECT * FROM empleado WHERE id=" + id;
+			query = "SELECT * FROM empleado WHERE id=" + id;
+						
 			// en este caso es mejor mantener este proceso como variable y no
 			// global
 			conexion objC = new conexion();
@@ -208,7 +214,8 @@ public class empleado {
 				this.genero = res.getString(10);
 			}
 		} catch (Exception e) {
-			// e.printStackTrace();
+			System.out.println(query);
+			e.printStackTrace();
 		}
 		// regresa este mismo contexto de empleado
 		return this;
