@@ -11,23 +11,34 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import modelo.bitacora;
 import modelo.empleado;
-import modelo.usuario;
 
 //ubica a la clase
 @Path("/empleado")
 public class WSEmpleado {
 
-	// define el método, el contexto
 	@GET
-	@Path("/listado")
-	// listado = producir
+	@Path("/listado/{usr}/{pwd}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public List<empleado> getListado(usuario objU) {
-		empleado objeE = new empleado();
-		return objeE.getListaE(objU);
-		// después lo convertirá a JSON
+	@Consumes(MediaType.APPLICATION_JSON) 
+	public List<empleado> getListado(@PathParam("usr") String usrB, 
+			@PathParam("pwd") String pwdB,
+			@PathParam("token") String tokenB) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usrB);
+		objB.setPassword(pwdB);
+		objB.setToken(tokenB);
+
+		if (objB.validaToken()) {
+			empleado objeE = new empleado();
+			return objeE.getListaE();
+		} else {
+			return null;
+		}
+
 	}
 
 	@GET

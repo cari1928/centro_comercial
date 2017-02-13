@@ -1,6 +1,7 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class bitacora {
@@ -33,6 +34,38 @@ public class bitacora {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public boolean validaToken() {
+		boolean ban = false;
+
+		try {
+			conexion objC = new conexion();
+			Connection con = objC.getCon();
+
+			String query = "SELECT COUNT(*) FROM bitacora WHERE usuario='" + usuario + "' AND password='" + password
+					+ "' AND token='" + token + "' AND NOW() BETWEEN fecini and fecfin";
+			Statement stmt = con.createStatement();
+			ResultSet res = stmt.executeQuery(query);
+
+			// validación
+			//ban = res.next();
+			
+			if(res.next()) {
+				ban = true;
+			} else {
+				ban = false;
+			}
+			
+			//ban = res.getInt(1) > 0;
+			
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ban;
 	}
 
 }

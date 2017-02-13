@@ -134,52 +134,38 @@ public class empleado {
 		this.genero = genero;
 	}
 
-	public List<empleado> getListaE(usuario objU) {
+	public List<empleado> getListaE() {
 		// jersey va a tomar cada objeto y retornará un json
 		List<empleado> arrE = null;
 		empleado objE;
-		String query =  "";
-		
+		String query = "";
+
 		try {
 			arrE = new ArrayList<>();
 
 			conexion objC = new conexion();
 			Connection con = objC.getCon();
 
-			String usuario = objU.getUsuario();
-			String password = objU.getPassword();
-			String token = objU.getToken();
-			query = "SELECT COUNT(*) FROM bitacora WHERE usuario='" + usuario + "' AND password='" + password
-					+ "' AND token='" + token + "' AND NOW() BETWEEN fecini and fecfin";
-			
-			Statement stmt_2 = con.createStatement();
-			ResultSet res_2 = stmt_2.executeQuery(query);
+			// si va a tener valores
+			query = "SELECT * FROM empleado ORDER BY nombre";
+			Statement stmt = con.createStatement();
+			ResultSet res = stmt.executeQuery(query);
 
-			if (res_2.next()) {
-				// si va a tener valores
-				query = "SELECT * FROM empleado ORDER BY nombre";
-				Statement stmt = con.createStatement();
-				ResultSet res = stmt.executeQuery(query);
-
-				while (res.next()) {
-					objE = new empleado();
-					objE.id = res.getInt(1);
-					objE.nombre = res.getString(2);
-					objE.apellido_p = res.getString(3);
-					objE.apellido_m = res.getString(4);
-					objE.rfc = res.getString(5);
-					objE.direccion = res.getString(6);
-					objE.correo = res.getString(7);
-					objE.tel_casa = res.getString(8);
-					objE.tel_cel = res.getString(9);
-					objE.genero = res.getString(10);
-					arrE.add(objE);
-				}
-			} else {
-				this.status = "Ocurrió un error en la conexión al servidor";
-				// manda el obj en el que estamos como producto del arreglo
-				arrE.add(this);
+			while (res.next()) {
+				objE = new empleado();
+				objE.id = res.getInt(1);
+				objE.nombre = res.getString(2);
+				objE.apellido_p = res.getString(3);
+				objE.apellido_m = res.getString(4);
+				objE.rfc = res.getString(5);
+				objE.direccion = res.getString(6);
+				objE.correo = res.getString(7);
+				objE.tel_casa = res.getString(8);
+				objE.tel_cel = res.getString(9);
+				objE.genero = res.getString(10);
+				arrE.add(objE);
 			}
+
 			con.close();
 
 		} catch (Exception e) {
@@ -191,10 +177,10 @@ public class empleado {
 
 	public empleado getEmpleado() {
 		String query = "no hay query";
-		
+
 		try {
 			query = "SELECT * FROM empleado WHERE id=" + id;
-						
+
 			// en este caso es mejor mantener este proceso como variable y no
 			// global
 			conexion objC = new conexion();
@@ -214,7 +200,7 @@ public class empleado {
 				this.genero = res.getString(10);
 				this.status = "";
 			}
-			
+
 		} catch (Exception e) {
 			System.out.println(query);
 			e.printStackTrace();
