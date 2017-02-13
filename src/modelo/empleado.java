@@ -212,7 +212,9 @@ public class empleado {
 				this.tel_casa = res.getString(8);
 				this.tel_cel = res.getString(9);
 				this.genero = res.getString(10);
+				this.status = "";
 			}
+			
 		} catch (Exception e) {
 			System.out.println(query);
 			e.printStackTrace();
