@@ -179,17 +179,16 @@ public class empleado {
 		String query = "no hay query";
 
 		try {
-			query = "SELECT * FROM empleado WHERE id=" + id;
+			// query = "SELECT * FROM empleado WHERE id=" + id;
+			query = "SELECT * FROM empleado WHERE nombre='" + this.nombre + "'";
 
-			// en este caso es mejor mantener este proceso como variable y no
-			// global
 			conexion objC = new conexion();
 			Connection con = objC.getCon();
 			Statement stmt = con.createStatement();
 			ResultSet res = stmt.executeQuery(query);
 
 			if (res.next()) {
-				this.nombre = res.getString(2);
+				this.id = res.getInt(1);
 				this.apellido_p = res.getString(3);
 				this.apellido_m = res.getString(4);
 				this.rfc = res.getString(5);
@@ -198,7 +197,7 @@ public class empleado {
 				this.tel_casa = res.getString(8);
 				this.tel_cel = res.getString(9);
 				this.genero = res.getString(10);
-				this.status = "";
+				// this.status = "";
 			}
 
 		} catch (Exception e) {
@@ -233,10 +232,12 @@ public class empleado {
 					+ "apellido_m='" + apellido_m + "', rfc='" + rfc + "', direccion='" + direccion + "', correo='"
 					+ correo + "', tel_casa='" + tel_casa + "', tel_cel='" + tel_cel + "', genero='" + genero
 					+ "' WHERE id=" + id;
+
 			conexion objC = new conexion();
 			Connection con = objC.getCon();
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
+
 		} catch (Exception e) {
 			System.out.println(e.toString()); // para mostrar errores en consola
 		}

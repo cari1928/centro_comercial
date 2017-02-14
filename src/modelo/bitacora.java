@@ -48,17 +48,16 @@ public class bitacora {
 			Statement stmt = con.createStatement();
 			ResultSet res = stmt.executeQuery(query);
 
-			// validación
-			//ban = res.next();
-			
-			if(res.next()) {
+			if (res.next()) {
 				ban = true;
 			} else {
 				ban = false;
 			}
-			
-			//ban = res.getInt(1) > 0;
-			
+
+			// validación
+			// ban = res.next();
+			// ban = res.getInt(1) > 0;
+
 			con.close();
 
 		} catch (Exception e) {
