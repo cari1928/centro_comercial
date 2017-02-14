@@ -232,7 +232,7 @@ public class empleado {
 					+ "apellido_m='" + apellido_m + "', rfc='" + rfc + "', direccion='" + direccion + "', correo='"
 					+ correo + "', tel_casa='" + tel_casa + "', tel_cel='" + tel_cel + "', genero='" + genero
 					+ "' WHERE id=" + id;
-
+			 
 			conexion objC = new conexion();
 			Connection con = objC.getCon();
 			Statement stmt = con.createStatement();
