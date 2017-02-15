@@ -20,7 +20,7 @@ public class WSEmpleado {
 	@GET
 	@Path("/listado/{usr}/{pwd}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
+	//@Consumes(MediaType.APPLICATION_JSON)
 	public List<empleado> getListado(@PathParam("usr") String usrB, @PathParam("pwd") String pwdB,
 			@PathParam("token") String tokenB) {
 
@@ -32,9 +32,9 @@ public class WSEmpleado {
 		if (objB.validaToken()) {
 			empleado objeE = new empleado();
 			return objeE.getListaE();
-		} else {
-			return null;
-		}
+		} 
+
+		return null;
 
 	}
 
@@ -45,7 +45,7 @@ public class WSEmpleado {
 
 	@Path("/ver/{usr}/{pwd}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON) // agregado
+	//@Consumes(MediaType.APPLICATION_JSON) // agregado
 	public empleado verEmpleado(@PathParam("usr") String usrB, @PathParam("pwd") String pwdB,
 			@PathParam("token") String tokenB) {
 

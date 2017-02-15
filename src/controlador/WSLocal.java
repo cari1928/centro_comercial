@@ -21,7 +21,7 @@ public class WSLocal {
 	@GET
 	@Path("/listado/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
+	//@Consumes(MediaType.APPLICATION_JSON)
 	public List<local> getListado(@PathParam("usr") String usr, @PathParam("pass") String pass,
 			@PathParam("token") String token) {
 
@@ -39,11 +39,11 @@ public class WSLocal {
 	}
 
 	@GET
-	@Path("/ver/{id}")
+	@Path("/ver/{idLoc}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public local getLocal(@PathParam("id") int id) {
+	public local getLocal(@PathParam("idLoc") int idloc) {
 		local objL = new local();
-		objL.setId(id);
+		objL.setId(idloc);
 		return objL.getLocal();
 	}
 

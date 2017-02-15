@@ -241,6 +241,8 @@ public class empleado {
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
 
+			con.close();
+
 		} catch (Exception e) {
 			System.out.println(e.toString()); // para mostrar errores en consola
 		}
@@ -253,6 +255,9 @@ public class empleado {
 			Connection con = objC.getCon();
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
+
+			con.close();
+
 		} catch (Exception e) {
 			System.out.println(e.toString()); // para mostrar errores en consola
 		}
