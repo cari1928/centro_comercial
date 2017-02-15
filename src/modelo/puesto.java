@@ -1,5 +1,10 @@
 package modelo;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -31,6 +36,117 @@ public class puesto {
 
 	public void setPuesto(String puesto) {
 		this.puesto = puesto;
+	}
+
+	public List<puesto> getListaP() {
+		List<puesto> listP = null;
+		puesto objP;
+
+		try {
+			listP = new ArrayList<>();
+
+			// conexion
+			conexion objC = new conexion();
+			Connection con = objC.getCon();
+
+			// valores
+			String query = "SELECT * FROM puesto ORDER BY puesto";
+			Statement stmt = con.createStatement();
+			ResultSet res = stmt.executeQuery(query);
+
+			while (res.next()) {
+				objP = new puesto();
+				objP.id = res.getInt(1);
+				objP.puesto = res.getString(2);
+				listP.add(objP);
+			}
+
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listP;
+	}
+
+	public puesto verPuesto() {
+
+		try {
+			// conexion
+			conexion objC = new conexion();
+			Connection con = objC.getCon();
+
+			// valores
+			String query = "SELECT * FROM puesto WHERE id=" + this.id;
+			Statement stmt = con.createStatement();
+			ResultSet res = stmt.executeQuery(query);
+
+			if (res.next()) {
+				this.puesto = res.getString(2);
+			}
+
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return this;
+	}
+
+	public void insPuesto() {
+		try {
+			// conexion
+			conexion objC = new conexion();
+			Connection con = objC.getCon();
+
+			// valores
+			String query = "INSERT INTO puesto(puesto) " + "VALUES('" + this.puesto + "')";
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(query);
+
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void actPuesto() {
+		try {
+			// conexion
+			conexion objC = new conexion();
+			Connection con = objC.getCon();
+
+			// valores
+			String query = "UPDATE puesto SET puesto='" + this.puesto + "' WHERE id=" + this.id;
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(query);
+
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void delPuesto() {
+		try {
+			// conexion
+			conexion objC = new conexion();
+			Connection con = objC.getCon();
+
+			// valores
+			String query = "DELETE FROM puesto WHERE id=" + this.id;
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(query);
+
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
