@@ -200,6 +200,8 @@ public class empleado {
 				// this.status = "";
 			}
 
+			con.close();
+
 		} catch (Exception e) {
 			System.out.println(query);
 			e.printStackTrace();
@@ -218,6 +220,7 @@ public class empleado {
 			Connection con = objC.getCon();
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
+			con.close();
 
 		} catch (Exception e) {
 			System.out.println(e.toString()); // para mostrar errores en consola
@@ -232,7 +235,7 @@ public class empleado {
 					+ "apellido_m='" + apellido_m + "', rfc='" + rfc + "', direccion='" + direccion + "', correo='"
 					+ correo + "', tel_casa='" + tel_casa + "', tel_cel='" + tel_cel + "', genero='" + genero
 					+ "' WHERE id=" + id;
-			 
+
 			conexion objC = new conexion();
 			Connection con = objC.getCon();
 			Statement stmt = con.createStatement();
