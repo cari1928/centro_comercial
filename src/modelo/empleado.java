@@ -245,7 +245,7 @@ public class empleado {
 
 	public void delEmpleado() {
 		try {
-			String query = "DELETE FROM empelado where id=" + id;
+			String query = "DELETE FROM empleado where id=" + this.id;
 			conexion objC = new conexion();
 			Connection con = objC.getCon();
 			Statement stmt = con.createStatement();

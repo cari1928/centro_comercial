@@ -50,13 +50,7 @@ public class bitacora {
 
 			if (res.next()) {
 				ban = true;
-			} else {
-				ban = false;
 			}
-
-			// validación
-			// ban = res.next();
-			// ban = res.getInt(1) > 0;
 
 			con.close();
 
