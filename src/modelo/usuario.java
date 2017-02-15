@@ -26,6 +26,16 @@ public class usuario {
 		return token;
 	}
 
+	@XmlElement(required = true)
+	public String getUsuario() {
+		return usuario;
+	}
+
+	@XmlElement(required = true)
+	public String getPassword() {
+		return password;
+	}
+
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
@@ -91,14 +101,6 @@ public class usuario {
 			hash += Integer.toHexString(b);
 		}
 		return hash;
-	}
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public String getPassword() {
-		return password;
 	}
 
 }

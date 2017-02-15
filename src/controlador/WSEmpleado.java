@@ -20,7 +20,6 @@ public class WSEmpleado {
 	@GET
 	@Path("/listado/{usr}/{pwd}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_JSON)
 	public List<empleado> getListado(@PathParam("usr") String usrB, @PathParam("pwd") String pwdB,
 			@PathParam("token") String tokenB) {
 
@@ -32,21 +31,71 @@ public class WSEmpleado {
 		if (objB.validaToken()) {
 			empleado objeE = new empleado();
 			return objeE.getListaE();
-		} 
+		}
 
 		return null;
-
 	}
 
 	@GET
-
-	// @Path("/ver/{idEmp}") // {variable} No es parte de la URL
-	// public empleado verEmpleado(@PathParam("idEmp") int idemp) {
-
-	@Path("/ver/{usr}/{pwd}/{token}")
+	@Path("/ver/{idEmp}/{usr}/{pwd}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_JSON) // agregado
-	public empleado verEmpleado(@PathParam("usr") String usrB, @PathParam("pwd") String pwdB,
+	public empleado verEmpleado(@PathParam("idEmp") int idemp, @PathParam("usr") String usrB,
+			@PathParam("pwd") String pwdB, @PathParam("token") String tokenB) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usrB);
+		objB.setPassword(pwdB);
+		objB.setToken(tokenB);
+
+		if (objB.validaToken()) {
+			empleado objE = new empleado();
+			objE.setId(idemp);
+			return objE.getEmpleado();
+		}
+		return null;
+	}
+
+	@POST
+	@Path("/insertar/{usr}/{pwd}/{token}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public empleado insEmpleado(empleado objE, @PathParam("idEmp") int idemp, @PathParam("usr") String usrB,
+			@PathParam("pwd") String pwdB, @PathParam("token") String tokenB) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usrB);
+		objB.setPassword(pwdB);
+		objB.setToken(tokenB);
+
+		if (objB.validaToken()) {
+			objE.insEmpleado();
+			return objE;
+		}
+		return null;
+	}
+
+	@PUT
+	@Path("/actualizar/{usr}/{pwd}/{token}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public empleado actEmpleado(empleado objE, @PathParam("idEmp") int idemp, @PathParam("usr") String usrB,
+			@PathParam("pwd") String pwdB, @PathParam("token") String tokenB) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usrB);
+		objB.setPassword(pwdB);
+		objB.setToken(tokenB);
+
+		if (objB.validaToken()) {
+			objE.actEmpleado();
+			return objE;
+		}
+		return null;
+	}
+
+	@DELETE
+	@Path("/borrar/{idEmp}/{usr}/{pwd}/{token}")
+	public void delEmpleado(@PathParam("idEmp") int idemp, @PathParam("usr") String usrB, @PathParam("pwd") String pwdB,
 			@PathParam("token") String tokenB) {
 
 		bitacora objB = new bitacora();
@@ -56,42 +105,9 @@ public class WSEmpleado {
 
 		if (objB.validaToken()) {
 			empleado objE = new empleado();
-			// objE.setId(idemp);
-			objE.setNombre(usrB);
-			return objE.getEmpleado();
-		} else {
-			return null;
+			objE.setId(idemp);
+			objE.delEmpleado();
 		}
-	}
-
-	@POST
-	@Path("/insertar")
-	// insertará un JSON
-	// si se quiere regresar un mensaje se debe usar produces
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public empleado insEmpleado(empleado objE) {
-		// en este punto ya pasó por jersey, el objeto tiene todos los valores
-		objE.insEmpleado();
-		return objE;
-		// jersey lo vuelve a parsear en JSON
-	}
-
-	@PUT
-	@Path("/actualizar")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public empleado actEmpleado(empleado objE) {
-		objE.actEmpleado();
-		return objE;
-	}
-
-	@DELETE
-	@Path("/borrar/{idEmp}")
-	public void delEmpleado(@PathParam("idEmp") int idemp) {
-		empleado objE = new empleado();
-		objE.setId(idemp);
-		objE.delEmpleado();
 	}
 
 }

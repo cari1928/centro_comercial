@@ -30,6 +30,7 @@ public class empleado {
 	private String status;
 
 	// atributo factible a salir de un resultado web service
+	@XmlElement(required = true)
 	public String getStatus() {
 		return status;
 	}
@@ -179,8 +180,7 @@ public class empleado {
 		String query = "no hay query";
 
 		try {
-			// query = "SELECT * FROM empleado WHERE id=" + id;
-			query = "SELECT * FROM empleado WHERE nombre='" + this.nombre + "'";
+			query = "SELECT * FROM empleado WHERE id=" + id;
 
 			conexion objC = new conexion();
 			Connection con = objC.getCon();
@@ -197,7 +197,6 @@ public class empleado {
 				this.tel_casa = res.getString(8);
 				this.tel_cel = res.getString(9);
 				this.genero = res.getString(10);
-				// this.status = "";
 			}
 
 			con.close();
