@@ -37,37 +37,76 @@ public class WSPuesto {
 	}
 
 	@GET
-	@Path("/ver/{idPue}")
+	@Path("/ver/{idPue}/{usr}/{pwd}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public puesto verPuesto(@PathParam("idPue") int idpue) {
-		puesto objP = new puesto();
-		objP.setId(idpue);
-		return objP.verPuesto();
+	public puesto verPuesto(@PathParam("idPue") int idpue, @PathParam("usr") String usr, @PathParam("pwd") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			puesto objP = new puesto();
+			objP.setId(idpue);
+			return objP.verPuesto();
+		}
+		return null;
 	}
 
 	@POST
-	@Path("/insertar")
+	@Path("/insertar/{usr}/{pwd}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public puesto insPuesto(puesto objP) {
-		objP.insPuesto();
-		return objP;
+	public puesto insPuesto(puesto objP, @PathParam("usr") String usr, @PathParam("pwd") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			objP.insPuesto();
+			return objP;
+		}
+		return null;
 	}
 
 	@PUT
-	@Path("/actualizar")
+	@Path("/actualizar/{usr}/{pwd}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public puesto actPuesto(puesto objP) {
-		objP.actPuesto();
-		return objP;
+	public puesto actPuesto(puesto objP, @PathParam("usr") String usr, @PathParam("pwd") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			objP.actPuesto();
+			return objP;
+		}
+		return null;
 	}
 
 	@DELETE
-	@Path("/borrar/{idPue}")
-	public void delPuesto(@PathParam("idPue") int idpue) {
-		puesto objP = new puesto();
-		objP.setId(idpue);
-		objP.delPuesto();
+	@Path("/borrar/{idPue}/{usr}/{pwd}/{token}")
+	public void delPuesto(@PathParam("idPue") int idpue, @PathParam("usr") String usr, @PathParam("pwd") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			puesto objP = new puesto();
+			objP.setId(idpue);
+			objP.delPuesto();
+		}
 	}
 }
