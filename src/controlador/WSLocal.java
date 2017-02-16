@@ -21,7 +21,7 @@ public class WSLocal {
 	@GET
 	@Path("/listado/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	//@Consumes(MediaType.APPLICATION_JSON)
+	// @Consumes(MediaType.APPLICATION_JSON)
 	public List<local> getListado(@PathParam("usr") String usr, @PathParam("pass") String pass,
 			@PathParam("token") String token) {
 
@@ -39,38 +39,77 @@ public class WSLocal {
 	}
 
 	@GET
-	@Path("/ver/{idLoc}")
+	@Path("/ver/{idLoc}/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public local getLocal(@PathParam("idLoc") int idloc) {
-		local objL = new local();
-		objL.setId(idloc);
-		return objL.getLocal();
+	public local getLocal(@PathParam("idLoc") int idloc, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			local objL = new local();
+			objL.setId(idloc);
+			return objL.getLocal();
+		}
+		return null;
 	}
 
 	@POST
-	@Path("/insertar")
+	@Path("/insertar/{usr}/{pass}/{token}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public local insLocal(local objL) {
-		objL.insLocal();
-		return objL;
+	public local insLocal(local objL, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			objL.insLocal();
+			return objL;
+		}
+		return null;
 	}
 
 	@PUT
-	@Path("/actualizar")
+	@Path("/actualizar/{usr}/{pass}/{token}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public local actLocal(local objL) {
-		objL.actLocal();
-		return objL;
+	public local actLocal(local objL, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			objL.actLocal();
+			return objL;
+		}
+		return null;
 	}
 
 	@DELETE
-	@Path("/borrar/{id}")
-	public void delLocal(@PathParam("id") int id) {
-		local objL = new local();
-		objL.setId(id);
-		objL.delLocal();
+	@Path("/borrar/{idLoc}/{usr}/{pass}/{token}")
+	public void delLocal(@PathParam("idLoc") int idloc, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			local objL = new local();
+			objL.setId(idloc);
+			objL.delLocal();
+		}
 	}
 
 }
