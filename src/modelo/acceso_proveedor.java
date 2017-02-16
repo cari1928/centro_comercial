@@ -15,8 +15,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "acceso_proveedor")
 public class acceso_proveedor {
 
-	int id_proveedor;
-	int id_tienda;
+	private int id_proveedor;
+	private int id_tienda;
 
 	@XmlElement(required = true)
 	public int getId_proveedor() {
