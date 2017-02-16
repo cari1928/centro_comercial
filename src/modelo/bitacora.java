@@ -43,7 +43,7 @@ public class bitacora {
 			conexion objC = new conexion();
 			Connection con = objC.getCon();
 
-			String query = "SELECT COUNT(*) FROM bitacora WHERE usuario='" + usuario + "' AND password='" + password
+			String query = "SELECT * FROM bitacora WHERE usuario='" + usuario + "' AND password='" + password
 					+ "' AND token='" + token + "' AND NOW() BETWEEN fecini and fecfin";
 			Statement stmt = con.createStatement();
 			ResultSet res = stmt.executeQuery(query);

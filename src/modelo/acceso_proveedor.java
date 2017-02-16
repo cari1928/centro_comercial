@@ -36,7 +36,7 @@ public class acceso_proveedor {
 		this.id_tienda = id_tienda;
 	}
 
-	public List<acceso_proveedor> getListCompleta() {
+	public List<acceso_proveedor> getListA() {
 		List<acceso_proveedor> listA = null;
 		acceso_proveedor objA;
 
@@ -67,27 +67,20 @@ public class acceso_proveedor {
 		return listA;
 	}
 
-	// lista de tiendas en base a un proveedor
-	public List<acceso_proveedor> getListTP() {
-		List<acceso_proveedor> listTP = null;
-		acceso_proveedor objA;
+	public acceso_proveedor verAccProovedor() {
 		try {
-			listTP = new ArrayList<>();
-
 			// conexion
 			conexion objC = new conexion();
 			Connection con = objC.getCon();
 
 			// valores
-			String query = "SELECT * FROM acceso_proveedor WHERE id_proveedor=" + this.id_proveedor;
+			String query = "SELECT * FROM acceso_proveedor WHERE id_proveedor=" + this.id_proveedor + " AND id_tienda="
+					+ this.id_tienda;
 			Statement stmt = con.createStatement();
 			ResultSet res = stmt.executeQuery(query);
 
-			while (res.next()) {
-				objA = new acceso_proveedor();
-				objA.id_proveedor = res.getInt(1);
-				objA.id_tienda = res.getInt(2);
-				listTP.add(objA);
+			if (res.next()) {
+				return this;
 			}
 
 			con.close();
@@ -96,39 +89,7 @@ public class acceso_proveedor {
 			e.printStackTrace();
 		}
 
-		return listTP;
-	}
-
-	// lista de proveedores en base a tiendas
-	public List<acceso_proveedor> getListPT() {
-		List<acceso_proveedor> listPT = null;
-		acceso_proveedor objA;
-		try {
-			listPT = new ArrayList<>();
-
-			// conexion
-			conexion objC = new conexion();
-			Connection con = objC.getCon();
-
-			// valores
-			String query = "SELECT * FROM acceso_proveedor WHERE id_tienda=" + this.id_tienda;
-			Statement stmt = con.createStatement();
-			ResultSet res = stmt.executeQuery(query);
-
-			while (res.next()) {
-				objA = new acceso_proveedor();
-				objA.id_proveedor = res.getInt(1);
-				objA.id_tienda = res.getInt(2);
-				listPT.add(objA);
-			}
-
-			con.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return listPT;
+		return null;
 	}
 
 	public void insAccProveedor() {
@@ -149,36 +110,16 @@ public class acceso_proveedor {
 		}
 	}
 
-	// cambia la tienda de un proveedor
-	public void actTP() {
+	public void actAccProveedor(acceso_proveedor objA) {
 		try {
 			// conexion
 			conexion objC = new conexion();
 			Connection con = objC.getCon();
 
 			// valores
-			String query = "UPDATE acceso_proveedor SET id_tienda=" + this.id_tienda + " WHERE id_proveedor="
-					+ this.id_proveedor;
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate(query);
-
-			con.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	// cambia el proveedor de una tienda
-	public void actPT() {
-		try {
-			// conexion
-			conexion objC = new conexion();
-			Connection con = objC.getCon();
-
-			// valores
-			String query = "UPDATE acceso_proveedor SET id_proveedor=" + this.id_proveedor + " WHERE id_tienda="
-					+ this.id_tienda;
+			String query = "UPDATE acceso_proveedor SET id_proveedor=" + this.id_proveedor + ", id_tienda="
+					+ this.id_tienda + " WHERE id_proveedor=" + objA.getId_proveedor() + " AND id_tienda="
+					+ objA.getId_tienda();
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
 
