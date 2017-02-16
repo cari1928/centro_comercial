@@ -160,7 +160,7 @@ public class tienda {
 			Connection con = objC.getCon();
 
 			// valores
-			String query = "UPDATE servicio SET nombre='" + this.nombre + "', h_apertura='" + this.h_apertura
+			String query = "UPDATE tienda SET nombre='" + this.nombre + "', h_apertura='" + this.h_apertura
 					+ "', h_cierre='" + this.h_cierre + "', telefono='" + this.telefono + "' WHERE id=" + this.id;
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
@@ -179,7 +179,7 @@ public class tienda {
 			Connection con = objC.getCon();
 
 			// valores
-			String query = "DELETE FROM servicio WHERE id=" + this.id;
+			String query = "DELETE FROM tienda WHERE id=" + this.id;
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
 

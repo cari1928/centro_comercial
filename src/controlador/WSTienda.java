@@ -33,42 +33,80 @@ public class WSTienda {
 			tienda objT = new tienda();
 			return objT.getListadoT();
 		}
-
 		return null;
 	}
 
 	@GET
-	@Path("/ver/{idTie}")
+	@Path("/ver/{idTie}/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public tienda verTienda(@PathParam("idTie") int idtie) {
-		tienda objT = new tienda();
-		objT.setId(idtie);
-		return objT.verTienda();
+	public tienda verTienda(@PathParam("idTie") int idtie, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			tienda objT = new tienda();
+			objT.setId(idtie);
+			return objT.verTienda();
+		}
+		return null;
 	}
 
 	@POST
-	@Path("/insertar")
+	@Path("/insertar/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public tienda insTienda(tienda objT) {
-		objT.insTienda();
-		return objT;
+	public tienda insTienda(tienda objT, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			objT.insTienda();
+			return objT;
+		}
+		return null;
 	}
 
 	@PUT
-	@Path("/actualizar")
+	@Path("/actualizar/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public tienda actTienda(tienda objT) {
-		objT.actTienda();
-		return objT;
+	public tienda actTienda(tienda objT, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			objT.actTienda();
+			return objT;
+		}
+		return null;
 	}
 
 	@DELETE
-	@Path("/borrar/{idTie}")
-	public void insTienda(@PathParam("idTie") int idtie) {
-		tienda objT = new tienda();
-		objT.setId(idtie);
-		objT.delTienda();
+	@Path("/borrar/{idTie}/{usr}/{pass}/{token}")
+	public void insTienda(@PathParam("idTie") int idtie, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			tienda objT = new tienda();
+			objT.setId(idtie);
+			objT.delTienda();
+		}
 	}
 }
