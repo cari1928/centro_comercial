@@ -35,38 +35,77 @@ public class WSProveedor {
 	}
 
 	@GET
-	@Path("/ver/{idPro}")
+	@Path("/ver/{idPro}/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public proveedor getProveedor(@PathParam("idPro") int idpro) {
-		proveedor objP = new proveedor();
-		objP.setId(idpro);
-		return objP.getProveedor();
+	public proveedor getProveedor(@PathParam("idPro") int idpro, @PathParam("usr") String usr,
+			@PathParam("pass") String pass, @PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			proveedor objP = new proveedor();
+			objP.setId(idpro);
+			return objP.getProveedor();
+		}
+		return null;
 	}
 
 	@POST
-	@Path("/insertar")
+	@Path("/insertar/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public proveedor insProveedor(proveedor objP) {
-		objP.insProveedor();
-		return objP;
+	public proveedor insProveedor(proveedor objP, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			objP.insProveedor();
+			return objP;
+		}
+		return null;
 	}
 
 	@PUT
-	@Path("/actualizar")
+	@Path("/actualizar/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public proveedor actProveedor(proveedor objP) {
-		objP.actProveedor();
-		return objP;
+	public proveedor actProveedor(proveedor objP, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			objP.actProveedor();
+			return objP;
+		}
+		return null;
 	}
 
 	@DELETE
-	@Path("/borrar/{idPro}")
-	public void delProveedor(@PathParam("idPro") int idpro) {
-		proveedor objP = new proveedor();
-		objP.setId(idpro);
-		objP.delProveedor();
+	@Path("/borrar/{idPro}/{usr}/{pass}/{token}")
+	public void delProveedor(@PathParam("idPro") int idpro, @PathParam("usr") String usr,
+			@PathParam("pass") String pass, @PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			proveedor objP = new proveedor();
+			objP.setId(idpro);
+			objP.delProveedor();
+		}
 	}
 
 }
