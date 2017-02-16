@@ -33,42 +33,80 @@ public class WSServicio {
 			servicio objS = new servicio();
 			return objS.getListaS();
 		}
-
 		return null;
 	}
 
 	@GET
-	@Path("/ver/{idSer}")
+	@Path("/ver/{idSer}/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public servicio verServicio(@PathParam("idSer") int idser) {
-		servicio objS = new servicio();
-		objS.setId(idser);
-		return objS.verServicio();
+	public servicio verServicio(@PathParam("idSer") int idser, @PathParam("usr") String usr,
+			@PathParam("pass") String pass, @PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			servicio objS = new servicio();
+			objS.setId(idser);
+			return objS.verServicio();
+		}
+		return null;
 	}
-	
+
 	@POST
-	@Path("/insertar")
+	@Path("/insertar/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public servicio insServicio(servicio objS) {
-		objS.insServicio();
-		return objS;
+	public servicio insServicio(servicio objS, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			objS.insServicio();
+			return objS;
+		}
+		return null;
 	}
-	
+
 	@PUT
-	@Path("/actualizar")
+	@Path("/actualizar/{usr}/{pass}/{token}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public servicio actServicio(servicio objS) {
-		objS.actServicio();
-		return objS;
+	public servicio actServicio(servicio objS, @PathParam("usr") String usr, @PathParam("pass") String pass,
+			@PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			objS.actServicio();
+			return objS;
+		}
+		return null;
 	}
-	
+
 	@DELETE
-	@Path("/borrar/{idServ}")
-	public void delServicio(@PathParam("idServ") int idserv) {
-		servicio objS = new servicio();
-		objS.setId(idserv);
-		objS.delServicio();
+	@Path("/borrar/{idServ}/{usr}/{pass}/{token}")
+	public void delServicio(@PathParam("idServ") int idserv, @PathParam("usr") String usr,
+			@PathParam("pass") String pass, @PathParam("token") String token) {
+
+		bitacora objB = new bitacora();
+		objB.setUsuario(usr);
+		objB.setPassword(pass);
+		objB.setToken(token);
+
+		if (objB.validaToken()) {
+			servicio objS = new servicio();
+			objS.setId(idserv);
+			objS.delServicio();
+		}
 	}
 }
