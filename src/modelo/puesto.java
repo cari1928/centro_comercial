@@ -34,6 +34,7 @@ public class puesto {
 		this.id = id;
 	}
 
+	// para el cambio de modelo, éste método no se ocupa
 	public void setPuesto(String puesto) {
 		this.puesto = puesto;
 	}
@@ -70,8 +71,8 @@ public class puesto {
 		return listP;
 	}
 
-	public puesto verPuesto() {
-
+	// utilizado para el cambio de modelo
+	public void verPuesto() {
 		try {
 			// conexion
 			conexion objC = new conexion();
@@ -92,7 +93,6 @@ public class puesto {
 			e.printStackTrace();
 		}
 
-		return this;
 	}
 
 	public void insPuesto() {

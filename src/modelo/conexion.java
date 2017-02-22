@@ -16,7 +16,6 @@ public class conexion {
 			con = DriverManager.getConnection(cadconexion, usuario, password);
 		} catch(Exception e) {
 			e.printStackTrace();
-			//System.out.println(e.toString());
 		}
 	}
 

@@ -26,10 +26,17 @@ public class empleado {
 	private String tel_casa;
 	private String tel_cel;
 	private String genero;
-
 	private String status;
 
+	// llave foránea
+	private puesto puesto;
+
 	// atributo factible a salir de un resultado web service
+	@XmlElement(required = true)
+	public puesto getPuesto() {
+		return puesto;
+	}
+
 	@XmlElement(required = true)
 	public String getStatus() {
 		return status;
@@ -139,6 +146,7 @@ public class empleado {
 		// jersey va a tomar cada objeto y retornará un json
 		List<empleado> arrE = null;
 		empleado objE;
+		puesto objP;
 		String query = "";
 
 		try {
@@ -152,7 +160,7 @@ public class empleado {
 			Statement stmt = con.createStatement();
 			ResultSet res = stmt.executeQuery(query);
 
-			while (res.next()) {
+			while (res.next()) {				
 				objE = new empleado();
 				objE.id = res.getInt(1);
 				objE.nombre = res.getString(2);
@@ -164,6 +172,14 @@ public class empleado {
 				objE.tel_casa = res.getString(8);
 				objE.tel_cel = res.getString(9);
 				objE.genero = res.getString(10);
+				
+				//instanciar objeto
+				//inner join
+				objP = new puesto();
+				objP.setId(res.getInt(11));
+				objP.verPuesto();
+				objE.puesto = objP;
+				
 				arrE.add(objE);
 			}
 
@@ -225,8 +241,6 @@ public class empleado {
 			System.out.println(e.toString()); // para mostrar errores en consola
 		}
 	}
-
-	// falta checar que funcionen actualizar y eliminar
 
 	public void actEmpleado() {
 		try {

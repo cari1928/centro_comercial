@@ -50,7 +50,9 @@ public class WSPuesto {
 		if (objB.validaToken()) {
 			puesto objP = new puesto();
 			objP.setId(idpue);
-			return objP.verPuesto();
+			
+			//modificado por el cambio de modelo
+			//return objP.verPuesto();
 		}
 		return null;
 	}
