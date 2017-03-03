@@ -20,6 +20,7 @@ public class usuario {
 	private String usuario;
 	private String password;
 	private String token;
+	private String status; //esto o que si hay error el token envía un valor que se puede interpretar como erróneo
 
 	@XmlElement(required = true)
 	public String getToken() {
@@ -46,7 +47,7 @@ public class usuario {
 
 	public void validaUsuario() {
 		String query = "query null";
-
+	
 		try {
 			query = "SELECT * FROM usuario " + "WHERE nombre='" + usuario + "' and password='" + password + "'";
 			conexion objC = new conexion();
@@ -62,6 +63,9 @@ public class usuario {
 				objB.setPassword(password);
 				objB.setToken(token);
 				objB.insAcceso();
+				
+			} else {
+				this.token = "no_valido";
 			}
 
 		} catch (Exception e) {

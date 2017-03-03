@@ -205,6 +205,7 @@ public class empleado {
 
 			if (res.next()) {
 				this.id = res.getInt(1);
+				this.nombre = res.getString(2);
 				this.apellido_p = res.getString(3);
 				this.apellido_m = res.getString(4);
 				this.rfc = res.getString(5);
@@ -213,6 +214,7 @@ public class empleado {
 				this.tel_casa = res.getString(8);
 				this.tel_cel = res.getString(9);
 				this.genero = res.getString(10);
+				this.status = "GET";
 			}
 
 			con.close();
@@ -253,7 +255,7 @@ public class empleado {
 			Connection con = objC.getCon();
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
-
+			this.status = "PUT";
 			con.close();
 
 		} catch (Exception e) {
@@ -268,7 +270,8 @@ public class empleado {
 			Connection con = objC.getCon();
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(query);
-
+			this.status = "DELETE";
+			
 			con.close();
 
 		} catch (Exception e) {

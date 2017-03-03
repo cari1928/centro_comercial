@@ -72,6 +72,7 @@ public class puesto {
 	}
 
 	// utilizado para el cambio de modelo
+	//public puesto verPuesto() {
 	public void verPuesto() {
 		try {
 			// conexion

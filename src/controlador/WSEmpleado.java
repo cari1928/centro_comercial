@@ -95,7 +95,8 @@ public class WSEmpleado {
 
 	@DELETE
 	@Path("/borrar/{idEmp}/{usr}/{pwd}/{token}")
-	public void delEmpleado(@PathParam("idEmp") int idemp, @PathParam("usr") String usrB, @PathParam("pwd") String pwdB,
+	@Produces(MediaType.APPLICATION_JSON)
+	public empleado delEmpleado(@PathParam("idEmp") int idemp, @PathParam("usr") String usrB, @PathParam("pwd") String pwdB,
 			@PathParam("token") String tokenB) {
 
 		bitacora objB = new bitacora();
@@ -107,7 +108,10 @@ public class WSEmpleado {
 			empleado objE = new empleado();
 			objE.setId(idemp);
 			objE.delEmpleado();
+			return objE;
 		}
+		
+		return null;
 	}
 
 }
